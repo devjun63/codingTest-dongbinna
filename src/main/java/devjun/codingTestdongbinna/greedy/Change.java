@@ -12,6 +12,7 @@ public class Change {
     * 가장 큰 화폐 단위 부터 돈을 거슬러 주는 것
     N이 1260이라고 가정
     * */
+
     public void getChange(int n) {
         int cnt = 0;
         int[] coinTypes = {500, 100, 50, 10};

@@ -1,5 +1,8 @@
 package devjun.codingTestdongbinna.implementation;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Implementation_Example implements Implementaion_Example_impl{
 
     public String[] movePlansArray() {
@@ -115,6 +118,138 @@ public class Implementation_Example implements Implementaion_Example_impl{
                     // 매 시각 안에 '3'이 포함되어 있다면 카운트 증가
                     if (check(i, j, k)) cnt++;
                 }
+            }
+        }
+        System.out.println(cnt);
+    }
+
+    public Map<Integer, Integer> kightPosition(){
+        Map<Integer, Integer> position = new HashMap<>();
+        // n 1 ~ 8
+        // ASCII CODE 'a' ~ 'h' - 65 ~ '73'
+        int row = (int)(Math.random() * 8) +1 ;
+        int column = (int)(Math.random() * 8) + 1;
+        position.put(row, column);
+        return position;
+    }
+
+    @Override
+    public void royalKnight() {
+        /*
+        8 X 8 좌표 평면에 특정한 한 칸에 나이트가 서 있다.
+        나이트는 L자 형태로만 이동 가능하다.
+        1. 수평으로 두 칸 이동한 뒤에 수직으로 한 칸 이동하기
+        2. 수직으로 두 칸 이동한 뒤에 수평으로 한 칸 이동하기
+
+        int[] row = {1, 2, 3, 4, 5, 6, 7, 8}
+        int[] column = {a, b, c, d, e, f, g, h}
+
+        이러한 8 X 8 좌표 평면상에서 나이트가 위치할 때 이동 가능한 경우의 수를 출력하시오
+
+        ex) a1 ... 2 / e4 .... 8
+
+        */
+
+        Map<Integer, Integer> position = new HashMap<>();
+        position = this.kightPosition();
+
+        int[] dx = {-2, -1, 1, 2, 2, 1, -1, -2};
+        int[] dy = {-1, -2, -2, -1, 1, 2, 2, 1};
+
+        // 8가지 방향에 대하여 각 위치로 이동이 가능한지 확인
+        int result = 0;
+        for (int i = 0; i < 8; i++) {
+            // 이동하고자 하는 위치 확인
+            int nextRow = position.get(0) + dx[i];
+            int nextColumn = position.get(1) + dy[i];
+            // 해당 위치로 이동이 가능하다면 카운트 증가
+            if (nextRow >= 1 && nextRow <= 8 && nextColumn >= 1 && nextColumn <= 8) {
+                result += 1;
+            }
+        }
+        System.out.println(result);
+    }
+
+
+    public static int n, m, x, y, direction;
+    // 방문한 위치를 저장하기 위한 맵을 생성하여 0으로 초기화
+    public static int[][] d = new int[50][50];
+    // 전체 맵 정보
+    public static int[][] arr = new int [50][50];
+
+    // 북, 동, 남, 서 방향 정의
+    public static int dx[] = {-1, 0, 1, 0};
+    public static int dy[] = {0, 1, 0, -1};
+
+    // 왼쪽으로 회전
+    public static void turn_left() {
+        direction -= 1;
+        if (direction == -1) direction = 3;
+    }
+
+    public void generateWorldSize(){
+        // 3 <=N, M <= 50
+        n = (int)(Math.random() * 47) + 3;
+        m = (int)(Math.random() * 47) + 3;
+        direction = (int)(Math.random() * 3);
+    }
+
+    public void generateGameWorld(){
+        for(int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (i == 0 || j == 0 || i == n - 1 || j == m - 1) {
+                    arr[i][j] = 1;
+                } else {
+                    arr[i][j] = (int) Math.random() * 1;
+                }
+            }
+        }
+    }
+
+    @Override
+    public void developmentGame() {
+        for(int i = 0; i < 50; i++){
+            for(int j = 0; j < 50; j++){
+                if(arr[i][j] == 0) {
+                    x = i;
+                    y = j;
+                    break;
+                }
+            }
+        }
+        d[x][y] = 1;
+
+        // 시뮬레이션 시작
+        int cnt = 1;
+        int turn_time = 0;
+        while (true) {
+            // 왼쪽으로 회전
+            turn_left();
+            int nx = x + dx[direction];
+            int ny = y + dy[direction];
+            // 회전한 이후 정면에 가보지 않은 칸이 존재하는 경우 이동
+            if (d[nx][ny] == 0 && arr[nx][ny] == 0) {
+                d[nx][ny] = 1;
+                x = nx;
+                y = ny;
+                cnt += 1;
+                turn_time = 0;
+                continue;
+            }
+            // 회전한 이후 정면에 가보지 않은 칸이 없거나 바다인 경우
+            else turn_time += 1;
+            // 네 방향 모두 갈 수 없는 경우
+            if (turn_time == 4) {
+                nx = x - dx[direction];
+                ny = y - dy[direction];
+                // 뒤로 갈 수 있다면 이동하기
+                if (arr[nx][ny] == 0) {
+                    x = nx;
+                    y = ny;
+                }
+                // 뒤가 바다로 막혀있는 경우
+                else break;
+                turn_time = 0;
             }
         }
         System.out.println(cnt);

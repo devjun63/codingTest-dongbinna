@@ -1,5 +1,7 @@
 package devjun.codingTestdongbinna.greedy;
 
+import java.util.Scanner;
+
 public class Greedy_Example_impl implements Greedy_Example{
 
     public int makeAdventurerNum(){
@@ -31,5 +33,81 @@ public class Greedy_Example_impl implements Greedy_Example{
         }
 
         System.out.println(cnt);
+    }
+
+    @Override
+    public void multipleOrPlus() {
+        /*
+        각 자리가 숫자 (0~9)로만 이루어진 문자열 S
+        왼쪽부터 오른쪽으로 하나씩 모든 숫자를 확인하며 숫자 사이에 'X' or '+' 연산자를 넣어
+        결과적으로 만들 수 있는 가장 큰 수를 도출하시오.
+        단 + 보다 X를 먼저 계산하는 일반적 방식이 아니라 모든 연산은 좌에서 우로 이루어 진다고 가정
+
+        입력: S문자열의 길이 1 <= S <= 20
+        출력: 뭐.. 그냥
+
+        문제 접근
+        result라는 변수를 두고
+        for문으로 S.charAt(0)부터 length까지 돌리는데
+        result가 0 혹은 1인 상태라면 +연산을
+        그렇지 않으면서 해당 자리 숫자가 0이나 1이라면 +연산을
+        그 외의 연산에 대해서는 곱셈 연산을 하면 가장 큰 수를 구할수 있을것이라고 생각했다.
+
+        */
+        int result = 0;
+        Scanner sc = new Scanner(System.in);
+        String s = sc.nextLine();
+
+        for (int i = 0; i < s.length(); i++) {
+            int temp =Character.getNumericValue(s.charAt(i));
+            if(result == 0 || result == 1) {
+                result = result + temp;
+            }else {
+                if(temp == 0 || temp == 1) {
+                    result = result + temp;
+                }else {
+                    result = result * temp;
+                }
+            }
+        }
+
+        System.out.println(result);
+    }
+
+    @Override
+    public void filpString() {
+        /*
+        0과 1로만 이루어진 문자열 S
+        이 문자열 S에 있는 모든 숫자를 전부 같도록
+        S에서 연속된 하나 이상의 숫자를 잡고 모두 뒤집어 보자.
+        뒤집는 것은 1을 0으로 0을 1로 바꾸는 것
+
+        ex) S = 0001100 -> 1110011 -> 1111111
+        but 0001100 -> 0000000 가능
+
+        모두 같은 숫자가 되도록 만드는데 필요한 최소 횟수를 구하고 출력하시오.
+
+        일단 그냥 종이에 010100010010, 0100010010001011101 이런식으로 막 적은 후 최소 횟수를 구해 보았다.
+        바뀌는 숫자를 구해보니 8번 바뀌고, 0이 5블록, 1이 4블록개가 존재
+        11, 0이 6블록,1이 6블록
+        나온 공식이 바뀐 횟수가 짝수 라면 (횟수 / 2), 홀수 라면 (횟수 / 2) +1
+        */
+
+        int head = 0;
+        int result = 0;
+
+        Scanner sc = new Scanner(System.in);
+        String s = sc.nextLine();
+
+        for (int i = 0; i < s.length(); i++) {
+            int temp = Character.getNumericValue(s.charAt(i));
+            if(i==0) head = temp;
+            if(head != temp) {
+                head = temp;
+                result = result + 1;
+            }
+        }
+
+        System.out.println((result % 2 == 0) ? (result / 2) : (result / 2) +1);
     }
 }

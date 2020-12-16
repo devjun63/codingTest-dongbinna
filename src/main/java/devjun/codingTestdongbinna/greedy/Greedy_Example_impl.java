@@ -1,5 +1,7 @@
 package devjun.codingTestdongbinna.greedy;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Greedy_Example_impl implements Greedy_Example{
@@ -107,7 +109,31 @@ public class Greedy_Example_impl implements Greedy_Example{
                 result = result + 1;
             }
         }
-
         System.out.println((result % 2 == 0) ? (result / 2) : (result / 2) +1);
     }
+
+    @Override
+    public void imposibleAmount() {
+
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        ArrayList<Integer> arrayList = new ArrayList<>();
+
+        for(int i = 0; i < n; i++){
+            arrayList.add(sc.nextInt());
+        }
+
+        Collections.sort(arrayList);
+
+        int target = 1;
+        for(int i = 0; i < n; i++) {
+            if(target < arrayList.get(i)) break;
+            target = target + arrayList.get(i);
+        }
+
+        System.out.println(target);
+
+    }
+
+
 }

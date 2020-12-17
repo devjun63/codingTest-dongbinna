@@ -5,4 +5,5 @@ public interface Greedy_Example {
     public void multipleOrPlus();
     public void filpString();
     public void imposibleAmount();
+    public void chooseBallingBall();
 }

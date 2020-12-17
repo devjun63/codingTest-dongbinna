@@ -135,5 +135,43 @@ public class Greedy_Example_impl implements Greedy_Example{
 
     }
 
+    public int makeBallCount() {
+        return (int)(Math.random() * 1000) + 1;
+    }
 
+    public int makeBall() {
+        return (int)(Math.random() * 10) + 1;
+    }
+
+    @Override
+    public void chooseBallingBall() {
+        /*
+        A,B가 볼링공의 무게를 다르게 가져가는 경우의 수를 구하라
+        입력 1 <= N <= 1000, 1 <= M <= 10, 1 <= K <= M
+        ex)에서 N = 5, M = 3
+        K = 1,3,2,3,2 => 8개
+        (1,2)(1,3)(1,4)(1,5)(2,3)(2,5)(3,4)(4,5)
+
+         생각한 것이 계수 정렬하고 해당 배열 * 나머지를 지속하면 result가 나왔다.
+         정확한 변수를 활용한 소스코드는 떠오르지 않아서 깃허브 코드를 참조했다.
+        */
+        int[] arr = new int[11];
+        int n = makeBallCount();
+        int m = makeBall();
+
+        for(int i = 0; i < n ; i++) {
+            int temp = makeBall();
+            arr[temp] += 1;
+        }
+
+        int result = 0;
+
+        // 1부터 m까지 각 무게에 대해서 처리
+        for(int i = 1; i <= m; i++) {
+            n -= arr[i];
+            result += arr[i] * n;
+        }
+
+        System.out.println(result);
+    }
 }

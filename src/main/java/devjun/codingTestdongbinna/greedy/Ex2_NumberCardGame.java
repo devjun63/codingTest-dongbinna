@@ -20,7 +20,7 @@ public class Ex2_NumberCardGame {
         int result = 0;
 
         for(int i = 0 ; i < n; i++) {
-        / 현재 줄에서 '가장 작은 수' 찾기
+        // 현재 줄에서 '가장 작은 수' 찾기
             int min_value = 10001;
             for (int j = 0; j < m; j++) {
                 int x = sc.nextInt();
@@ -31,8 +31,6 @@ public class Ex2_NumberCardGame {
         }
 
         System.out.println(result); // 최종 답안 출력
-    }
-
     }
 
 }

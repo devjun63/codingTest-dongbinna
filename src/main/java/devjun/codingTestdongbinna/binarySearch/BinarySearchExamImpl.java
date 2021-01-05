@@ -246,5 +246,48 @@ public class BinarySearchExamImpl implements BinarySearchExam{
             }
         }
     }
-    
+
+    @Override
+    public void makeTteokBokki() {
+        /*
+        Parametric Search 최적화 문제를 결정 문제로 바꾸어 해결하는 기법 (결정문제는 '예', '아니오' 로 답하는 문제)
+        탐색범위가 1부터 10억까지의 정수 중 하나이므로 이진 탐색이 필수적
+        떡의 개수 N  (1 <= N <= 1,000,000)
+        요청한 떡의 길이 M (1 <= M <= 2,000,000,000)
+        떡의 높이 H (1 <= H <= 1,000,000,000)
+        */
+
+        int n = (int)(Math.random() * 999999) + 1;
+        int m = (int)(Math.random() * 1999999999) + 1;
+
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = (int)(Math.random() * 999999999) + 1;
+        }
+
+        // 이진 탐색을 위한 시작점과 끝점 설정
+        int start = 0;
+        int end = (int) 1e9;
+        // 이진 탐색 수행 (반복적)
+        int result = 0;
+        while (start <= end) {
+            long total = 0;
+            int mid = (start + end) / 2;
+            for (int i = 0; i < n; i++) {
+                // 잘랐을 때의 떡의 양 계산
+                if (arr[i] > mid) total += arr[i] - mid;
+            }
+            if (total < m) { // 떡의 양이 부족한 경우 더 많이 자르기(왼쪽 부분 탐색)
+                end = mid - 1;
+            }
+            else { // 떡의 양이 충분한 경우 덜 자르기(오른쪽 부분 탐색)
+                result = mid; // 최대한 덜 잘랐을 때가 정답이므로, 여기에서 result에 기록
+                start = mid + 1;
+            }
+        }
+
+        System.out.println(result);
+
+    }
+
 }

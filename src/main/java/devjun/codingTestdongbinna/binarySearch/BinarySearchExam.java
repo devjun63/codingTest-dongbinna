@@ -7,4 +7,5 @@ public interface BinarySearchExam {
     public void searchPartsBinarySearch();
     public void searchPartsCountSort();
     public void searchPartsUsingSet();
+    public void makeTteokBokki();
 }
